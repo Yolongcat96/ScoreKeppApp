@@ -2,54 +2,41 @@ package com.example.android.scorekeeperapp;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.view.View.OnClickListener;
-import static java.lang.System.err;
-import static java.lang.System.out;
-import java.io.IOException;
-import java.io.PrintStream;
-import com.example.android.scorekeeperapp.R;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     final Context context = this;
 
     // set the constant variables
-    int maxNumberRound = 2;
-    int point3 = 3;
-    int point2 = 2;
-    int freeThrow = 1;
+    private static final int maxNumberRound = 5;
+    private static final int point3 = 3;
+    private static final int point2 = 2;
+    private static final int freeThrow = 1;
 
     // set score arrays
-    int[] arrayScoreTeamA = new int[maxNumberRound];
-    int[] arrayScoreTeamB = new int[maxNumberRound];
+    private int[] arrayScoreTeamA = new int[maxNumberRound];
+    private int[] arrayScoreTeamB = new int[maxNumberRound];
 
     // save the winner
-    String[] winnerCollection = new String[maxNumberRound];
+    private String[] winnerCollection = new String[maxNumberRound];
 
     // set the initial values
-    int currentRound = 1;
-    int scoreTeamA = 0;
-    int scoreTeamB = 0;
+    private int currentRound = 1;
+    private int scoreTeamA = 0;
+    private int scoreTeamB = 0;
 
     // set textView
-    TextView scoreView4TeamA;
-    TextView scoreView4TeamB;
-    TextView currentRoundView;
+    private TextView scoreView4TeamA;
+    private TextView scoreView4TeamB;
+    private TextView currentRoundView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,18 +49,18 @@ public class MainActivity extends AppCompatActivity {
         createTextViews();
     }
 
-    public void createTextViews() {
+    private void createTextViews() {
 
         //0. score display view for the team A
-        scoreView4TeamA = (TextView) findViewById(R.id.team_a_score);
+        scoreView4TeamA = findViewById(R.id.team_a_score);
         scoreView4TeamA.setText(String.valueOf(scoreTeamA));
 
         //1. score display view for the team B
-        scoreView4TeamB = (TextView) findViewById(R.id.team_b_score);
+        scoreView4TeamB = findViewById(R.id.team_b_score);
         scoreView4TeamB.setText(String.valueOf(scoreTeamB));
 
         //2. show the current round number
-        currentRoundView = (TextView) findViewById(R.id.currentRoundTextView);
+        currentRoundView = findViewById(R.id.currentRoundTextView);
         currentRoundView.setText(getString(R.string.currentRound) + String.valueOf(currentRound));
 
     }
@@ -107,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // update the team score based its ID and points
-    public void updateScoreWithTeamNameAndScore (boolean teamA, int plusPoint) {
+    private void updateScoreWithTeamNameAndScore(boolean teamA, int plusPoint) {
 
         if (teamA) {
             scoreTeamA = scoreTeamA + plusPoint;
@@ -148,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 currentRound = currentRound + 1;
 
                 // 2. reset the score display for both team
-                resetScores(2);
+                resetScores();
 
                 // 3. show the current round number
                 showCurrentRound();
@@ -159,16 +146,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void showCurrentRound() {
+    private void showCurrentRound() {
 
         currentRoundView.setText(getString(R.string.currentRound) + String.valueOf(currentRound));
 
     }
 
-    public int countNumberOfWin(String name) {
+    private int countNumberOfWin(String name) {
 
         int number = 0;
-        for (int i = 0 ; i < maxNumberRound; i++) {
+        for (int i = 0; i < maxNumberRound; i++) {
 
             if (name.equals(winnerCollection[i])) {
                 number = number + 1;
@@ -180,18 +167,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // It is shown when the current round is over than the maximum round
-    public void showGameResult() {
-
-        Log.d("ScoreKeep", "showGameResult: ");
+    private void showGameResult() {
 
         // custom dialog
         final Dialog dialog = new Dialog(context);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.result_popup);
 
-
         // check who is winner
-        String winnerName = "WHO?";
+        String winnerName;
         int numberOfWin4TeamA = countNumberOfWin(getResources().getString(R.string.TeamA));
         int numberOfWin4TeamB = countNumberOfWin(getResources().getString(R.string.TeamB));
 
@@ -207,13 +191,13 @@ public class MainActivity extends AppCompatActivity {
         String messageString = String.format("Winner is %s.\n\n Score is %d:%d", winnerName, numberOfWin4TeamA, numberOfWin4TeamB);
 
         // set the custom dialog components - text, image and button
-        TextView text = (TextView) dialog.findViewById(R.id.popupMessage);
+        TextView text = dialog.findViewById(R.id.popupMessage);
         text.setTextSize(25);
         text.setTextColor(getResources().getColor(R.color.darkGray));
         text.setText(messageString);
 
         // Add the close button
-        Button dialogButton = (Button) dialog.findViewById(R.id.closePopupBtn);
+        Button dialogButton = dialog.findViewById(R.id.closePopupBtn);
 
         // if button is clicked, close the custom dialog
         dialogButton.setOnClickListener(new OnClickListener() {
@@ -228,9 +212,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public String getResult(int scoreA, int scoreB) {
+    private String getResult(int scoreA, int scoreB) {
 
-        String returnMessage = "";
+        String returnMessage;
 
         if (scoreA > scoreB) {
             returnMessage = getString(R.string.TeamAWon);
@@ -244,25 +228,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // call this function when clicking the button "Result"
-    public void callScoreResultPopup() {
+    private void callScoreResultPopup() {
 
         StringBuilder concatString = new StringBuilder();
 
         for (int i = 0; i < maxNumberRound; i++) {
 
-            if ((arrayScoreTeamA[i] > 0) ||(0 < arrayScoreTeamB[i])) {
+            if ((arrayScoreTeamA[i] > 0) || (0 < arrayScoreTeamB[i])) {
 
                 String resultString = getResult(arrayScoreTeamA[i], arrayScoreTeamB[i]);
-
                 concatString.append(getString(R.string.round));
                 concatString.append(i);
                 concatString.append(": ");
                 concatString.append(String.format("(%d : ", arrayScoreTeamA[i]));
-                concatString.append(String.format("%d) ",arrayScoreTeamB[i]));
+                concatString.append(String.format("%d) ", arrayScoreTeamB[i]));
+                concatString.append("\n");
                 concatString.append(resultString);
 
             }
-
         }
 
         // custom dialog
@@ -271,13 +254,13 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.popup);
 
         // set the custom dialog components - text, image and button
-        TextView text = (TextView) dialog.findViewById(R.id.popupMessage);
+        TextView text = dialog.findViewById(R.id.popupMessage);
         text.setTextColor(getResources().getColor(R.color.darkGray));
         text.setTextSize(22);
         text.setText(concatString.toString());
 
         // Add the close button
-        Button dialogButton = (Button) dialog.findViewById(R.id.closePopupBtn);
+        Button dialogButton = dialog.findViewById(R.id.closePopupBtn);
 
         // if button is clicked, close the custom dialog
         dialogButton.setOnClickListener(new OnClickListener() {
@@ -300,14 +283,14 @@ public class MainActivity extends AppCompatActivity {
     // When clicking the button "Reset"
     public void onClickReset(View v) {
 
-        resetScores(2);
+        resetScores();
         currentRound = 1;
         showCurrentRound();
 
     }
 
     // update scoreDisplayTextView
-    public void setScoreAtScoreViewWithTeamandScore (boolean isTeamA, int score) {
+    private void setScoreAtScoreViewWithTeamandScore(boolean isTeamA, int score) {
 
         if (isTeamA) {
             scoreView4TeamA.setText(String.valueOf(score));
@@ -317,27 +300,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Reset all scores into 0
-    public void resetScores(int teamIndex) {
-
-        if (teamIndex == 0) { // Team A
-
-            scoreTeamA = 0;
-            setScoreAtScoreViewWithTeamandScore(true, scoreTeamA);
-
-        } else if (teamIndex == 1) { // Team B
-
-            scoreTeamB = 0;
-            setScoreAtScoreViewWithTeamandScore(false, scoreTeamB);
-
-        } else { // both
-
-            scoreTeamA = 0;
-            setScoreAtScoreViewWithTeamandScore(true, scoreTeamA);
-            scoreTeamB = 0;
-            setScoreAtScoreViewWithTeamandScore(false, scoreTeamB);
-        }
+    private void resetScores() {
+        scoreTeamA = 0;
+        setScoreAtScoreViewWithTeamandScore(true, scoreTeamA);
+        scoreTeamB = 0;
+        setScoreAtScoreViewWithTeamandScore(false, scoreTeamB);
 
     }
-
 
 }
