@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Score Keeper App</string>
+    <string name="currentRound">Current Round: </string>
+    <string name="point3">+3 Points</string>
+    <string name="point2">+2 Points</string>
+    <string name="FreeThrow">Free Throw</string>
+    <string name="TeamA">TEAM A</string>
+    <string name="TeamB">TEAM B</string>
+    <string name="Tie">Tie</string>
+    <string name="NextAround">Next \nRound</string>
+    <string name="Result">Result</string>
+    <string name="Reset">Reset</string>
+    <string name="warning">Warning</string>
+    <string name="noMoreRounds">No More Rounds!</string>
+    <string name="winner">Winner</string>
+    <string name="scoreBoardTitle">SCORE</string>
+    <string name="close">CLOSE</string>
+    <string name="TeamAWon">TeamA won!\n</string>
+    <string name="TeamBWon">TeamB won!\n</string>
+    <string name="sameScore">Tie!\n</string>
+    <string name="round">Round</string>
+</resources>
+

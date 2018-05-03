@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/game_over_dialog"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/popupMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="150dp"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="@color/darkGray"
+            android:textSize="35sp" />
+
+        <Button
+            android:id="@+id/closePopupBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="0"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:background="@drawable/warning_dialog_button"
+            android:text="@string/close"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"/>
+
+    </LinearLayout>
+</ScrollView>
